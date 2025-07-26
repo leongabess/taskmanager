@@ -19,18 +19,18 @@ async function loginUser (req, res){
 
   try {
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
-    if (result.rows.length === 0) return res.status(401).json({ error: 'Usuário não encontrado' });
+    if (result.rows.length === 0) return res.status(401).json({ error: 'User not found' });
 
     const user = result.rows[0];
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).json({ error: 'Senha incorreta' });
+    if (!match) return res.status(401).json({ error: 'Wrong password' });
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token });
 
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Erro ao fazer login' });
+    res.status(500).json({ error: 'Error while trying to login' });
   }
 };
 
@@ -53,7 +53,7 @@ async function getTasksUser (req, res) {
         res.json(query.rows);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ Error: 'Erro ao buscar tarefas' });
+        res.status(500).json({ Error: 'Error while trying to fin tasks' });
     }
 };
 
@@ -63,7 +63,7 @@ async function createTasksUsers (req, res) {
     const userId = req.userId;
 
     if (!title || !status || !description) {
-        return res.status(400).json({ error: 'Informe título, status e descrição' });
+        return res.status(400).json({ error: 'Please state a title, description and status' });
     }
 
     try {
@@ -75,7 +75,7 @@ async function createTasksUsers (req, res) {
         res.status(201).json(result.rows[0]);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Erro ao criar tarefa' });
+        res.status(500).json({ error: 'There was an error while trying to create the task' });
     }
 };
 
@@ -84,7 +84,7 @@ async function updateTasksUsers (req, res){
     const { title, status } = req.body;
     const userId = req.userId;
 
-    if (!title) return res.status(400).json({ error: 'Informe o título' });
+    if (!title) return res.status(400).json({ error: 'State the title' });
 
     try {
         const result = await pool.query(
@@ -93,11 +93,11 @@ async function updateTasksUsers (req, res){
             [status, title, userId]
         );
 
-        if (result.rows.length === 0) return res.status(404).json({ error: 'Tarefa não encontrada' });
+        if (result.rows.length === 0) return res.status(404).json({ error: 'Task not found' });
         res.status(200).json(result.rows[0]);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Erro ao atualizar tarefa' });
+        res.status(500).json({ error: 'There was an error while trying to update the task' });
     }
 };
 
@@ -107,7 +107,7 @@ async function deleteTasksUser (req, res){
     const userId = req.userId;
 
     if (!title && !status) {
-        return res.status(400).json({ error: 'Informe título ou status para remover' });
+        return res.status(400).json({ error: 'State the title to remove' });
     }
 
     try {
@@ -124,12 +124,12 @@ async function deleteTasksUser (req, res){
             );
         }
 
-        if (result.rowCount === 0) return res.status(404).json({ error: 'Nenhuma tarefa encontrada para remover' });
-        res.status(200).json({ message: 'Tarefa(s) removida(s)' });
+        if (result.rowCount === 0) return res.status(404).json({ error: 'No task found' });
+        res.status(200).json({ message: 'Tasks removed' });
 
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Erro ao remover tarefa' });
+        res.status(500).json({ error: 'Error while trying to remove task' });
     }
 };
 
