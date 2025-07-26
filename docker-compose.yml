@@ -25,8 +25,10 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
       - PORT=${PORT}
+      - JWT_SECRET=tokenpassword
     volumes:
       - ./backend:/app
     restart: on-failure
 volumes:
   pgdata:
+
