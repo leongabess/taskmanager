@@ -1,0 +1,49 @@
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas Tarefas</title>
+    <link rel="stylesheet" href="./styles/style-dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="dashboard">
+        <div id="user-info" class="user-info">
+            <p>Olá, <span id="username">...</span>!</p>
+        </div>
+        <h2 class="dashboard-title">Suas Tarefas</h2>
+
+
+        <form id="taskForm" class="task-form">
+            <input type="text" id="newTask" placeholder="Título da tarefa" required>
+            <input type="text" id="descriptionTask" placeholder="Descrição" required>
+            <select id="statusTask" required>
+                <option value="">Status</option>
+                <option value="pendente">Pendente</option>
+                <option value="em progresso">Em Progresso</option>
+                <option value="concluída">Concluída</option>
+            </select>
+            <button type="submit">Adicionar</button>
+        </form>
+
+        <div class="filtro-tarefas">
+            <label for="filtroStatus">Filtrar por status:</label>
+            <select id="filtroStatus">
+                <option value="todos">Todos</option>
+                <option value="pendente">Pendente</option>
+                <option value="em progresso">Em progresso</option>
+                <option value="concluída">Concluída</option>
+            </select>
+        </div>
+        <ul id="taskList" class="task-list">
+            <!-- Cards das tarefas -->
+        </ul>
+
+        <button id="logout" class="logout-button">Sair</button>
+    </div>
+    <script src="./js/config.js"></script>
+    <script src="./js/dashboard.js"></script>
+</body>
+
+</html>

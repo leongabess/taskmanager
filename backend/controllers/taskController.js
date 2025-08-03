@@ -26,7 +26,7 @@ async function loginUser (req, res){
     if (!match) return res.status(401).json({ error: 'Wrong password' });
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
+    res.json({ token, username: user.username });//verificar se o username está correto
 
   } catch (err) {
     console.error(err);
@@ -80,58 +80,61 @@ async function createTasksUsers (req, res) {
 };
 
 //udates the task by using their title
-async function updateTasksUsers (req, res){
-    const { title, status } = req.body;
+async function updateTasksUsers(req, res) {
+    const { id } = req.params;
+    const { status } = req.body;
     const userId = req.userId;
 
-    if (!title) return res.status(400).json({ error: 'State the title' });
+    if (!status) {
+        return res.status(400).json({ error: 'Status is required' });
+    }
 
     try {
         const result = await pool.query(
-            `UPDATE tasks SET status = $1, updated_at = NOW()
-             WHERE LOWER(title) = LOWER($2) AND user_id = $3 RETURNING *`,
-            [status, title, userId]
+            `UPDATE tasks 
+             SET status = $1, updated_at = NOW()
+             WHERE id = $2 AND user_id = $3
+             RETURNING *`,
+            [status, id, userId]
         );
 
-        if (result.rows.length === 0) return res.status(404).json({ error: 'Task not found' });
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Task not found' });
+        }
+
         res.status(200).json(result.rows[0]);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'There was an error while trying to update the task' });
+        res.status(500).json({ error: 'Error while trying to update the task' });
     }
-};
+}
 
 //removes a task of a user or remove all tasks that matches a status
-async function deleteTasksUser (req, res){
-    const { title, status } = req.body;
+async function deleteTasksUser(req, res) {
+    const { id } = req.params;
     const userId = req.userId;
 
-    if (!title && !status) {
-        return res.status(400).json({ error: 'State the title to remove' });
+    if (!id) {
+        return res.status(400).json({ error: 'Task ID is required' });
     }
 
     try {
-        let result;
-        if (title) {
-            result = await pool.query(
-                'DELETE FROM tasks WHERE LOWER(title) = LOWER($1) AND user_id = $2',
-                [title, userId]
-            );
-        } else if (status) {
-            result = await pool.query(
-                'DELETE FROM tasks WHERE LOWER(status) = LOWER($1) AND user_id = $2',
-                [status, userId]
-            );
+        const result = await pool.query(
+            `DELETE FROM tasks 
+             WHERE id = $1 AND user_id = $2`,
+            [id, userId]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: 'Task not found' });
         }
 
-        if (result.rowCount === 0) return res.status(404).json({ error: 'No task found' });
-        res.status(200).json({ message: 'Tasks removed' });
-
+        res.status(200).json({ message: 'Task removed successfully' });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Error while trying to remove task' });
     }
-};
+}
 
 module.exports = {
     createUsers,

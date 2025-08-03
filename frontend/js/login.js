@@ -8,7 +8,8 @@ document.getElementById("loginForm").addEventListener("submit", async function (
   
 
   try {
-    const response = await fetch("http://localhost:5000/api/login", {
+    //const response = await fetch("http://localhost:5000/api/login", {
+    const response = await fetch(`${window.apiBaseUrl}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,9 +21,10 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     if (response.ok) {
         const token = result.token;
         localStorage.setItem("token", token);
+        localStorage.setItem("username", result.username);
         console.log("Token é o ", token)
-        alert("Login feito!")
-        //window.location.href = "login.html";
+        alert("Login feito!")        
+        window.location.href = "./dashboard.html";
     } else {
       alert(result.message || "Erro ao tentar entrar");
     }

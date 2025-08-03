@@ -10,7 +10,10 @@ router.use(authMiddleWare);//token jwt
 
 router.post('/tasks', taskController.createTasksUsers);//body "title:", "description:", "status: "
 router.get('/tasks', taskController.getTasksUser);//body "id:" or "id:", "status: "
-router.patch('/tasks', taskController.updateTasksUsers);//body "title:" "status:"
-router.delete('/tasks', taskController.deleteTasksUser);//body "title:" or "status:"
+/*router.patch('/tasks', taskController.updateTasksUsers);//body "title:" "status:"*/
+router.patch('/tasks/:id', taskController.updateTasksUsers);//body "status:"
+/*router.delete('/tasks', taskController.deleteTasksUser);//body "title:" or "status:"*/
+router.delete('/tasks/:id', taskController.deleteTasksUser);//body "title:" or "status:"
 
 module.exports = router;
+
