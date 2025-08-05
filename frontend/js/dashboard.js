@@ -19,8 +19,7 @@ document.getElementById("taskForm").addEventListener("submit", async (e) => {
   const taskTitle = document.getElementById("newTask").value;
   const taskDescription = document.getElementById("descriptionTask").value;
   const taskStatus = document.getElementById("statusTask").value;
-
-  //const response = await fetch("http://localhost:5000/api/tasks", 
+ 
   const response = await fetch(`${window.apiBaseUrl}/api/tasks`, {
     method: "POST",
     headers: {

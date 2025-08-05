@@ -1,5 +1,5 @@
 body {
-  background-color: #BCA88D;
+  background-color: #1e1e2f;
   color: #fff;
   display: flex;
   justify-content: center;
@@ -10,7 +10,7 @@ body {
 
 /* === DASHBOARD STYLES === */
 .form-container {
-  background-color: #57564F;
+  background-color: #2c2c3c;
   padding: 2rem;
   border-bottom-right-radius: 80px;
   border-top-left-radius: 80px;
@@ -39,7 +39,7 @@ input {
 button {
   margin-top: 1rem;
   padding: 0.75rem;
-  background-color: #BCA88D;
+  background-color: #4a4a63;
   border: none;
   border-radius: 6px;
   color: white;
@@ -48,7 +48,10 @@ button {
 }
 
 button:hover {
-  background-color: #928069;
+  background-color: #353549;
 }
 
-
+.redirecionador-metodo {
+  color: #5c6bc0;
+  text-decoration: none;
+}
