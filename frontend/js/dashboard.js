@@ -41,7 +41,6 @@ document.getElementById("taskForm").addEventListener("submit", async (e) => {
 // Funções auxiliares para manipulação de tarefas
 
 async function carregarTarefas() {
-  //const res = await fetch("http://localhost:5000/api/tasks", 
   const res = await fetch(`${window.apiBaseUrl}/api/tasks`, {
     headers: { "Authorization": `Bearer ${token}` }
   });
@@ -136,7 +135,6 @@ async function deletarTarefa(id) {
   const confirmacao = confirm("Tem certeza que deseja excluir esta tarefa?");
   if (!confirmacao) return;
 
-  //const response = await fetch(`http://localhost:5000/api/tasks/${id}`, 
   const response = await fetch(`${window.apiBaseUrl}/api/tasks/${id}`, {
     method: "DELETE",
     headers: {
@@ -152,7 +150,6 @@ async function deletarTarefa(id) {
 }
 
 async function atualizarStatus(id, novoStatus) {
-  //const response = await fetch(`http://localhost:5000/api/tasks/${id}`, 
   const response = await fetch(`${window.apiBaseUrl}/api/tasks/${id}`, {
     method: "PATCH",
     headers: {

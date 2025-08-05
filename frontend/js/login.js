@@ -8,7 +8,6 @@ document.getElementById("loginForm").addEventListener("submit", async function (
   
 
   try {
-    //const response = await fetch("http://localhost:5000/api/login", {
     const response = await fetch(`${window.apiBaseUrl}/api/login`, {
       method: "POST",
       headers: {
