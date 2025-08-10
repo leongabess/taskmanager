@@ -1,45 +1,48 @@
-## 🚀 TaskerManager
+##  TaskerManager
 
-Gerenciador de tarefas com foco em permitir que usuários criem, visualizem, atualizem e removam tarefas associadas a suas contas. Suporta filtragem por status e operações específicas via API REST.
-
-<br><br>
-
-## 📋 Sobre o projeto
-
-TaskerManager é uma evolução do meu projeto [TaskManagerCLI](https://github.com/leongabess/TaskManagerCLI), um desafio do roadmap.sh. 
-
-Enquanto o CLI atendia às funcionalidades básicas via linha de comando, aqui a proposta é oferecer um backend completo com lógica para gerenciar tarefas de múltiplos usuários, utilizando uma API REST em JavaScript com Express e banco de dados PostgreSQL (substituindo o armazenamento em arquivos JSON). 
-
-Os testes e chamadas à API são realizados por ferramentas como Postman e Insomnia.
-
-Posteriormente será implementada a parte do frontend, onde essas etapas serão feitas pelo usuário através da interface.
+Gerenciador de tarefas com foco em permitir que usuários criem, visualizem, atualizem e removam tarefas associadas a seus perfis. Suporta filtragem por status e operações via API.
 
 <br><br>
 
-## 🛠️ Tecnologias
+##  Sobre o projeto
+
+TaskerManager foi baseado no meu projeto [TaskManagerCLI](https://github.com/leongabess/TaskManagerCLI), um desafio do roadmap.sh. 
+
+O projeto em CLI fazia coisas básicas como obter e salvar as tarefas em um .JSON, porém resolvi aplicar o conceito do CRUD (que passou por várias alterações) em uma aplicação backend, utilizando o Express e PostgreSQL (para substituir o .JSON)
+
+
+Os testes e chamadas à API foram realizados pelo postman.
+
+A API, backend e banco de dados (no momento) estão hospedados no [render](https://taskmanager-gb90.onrender.com), e o front-end no [vercel](https://taskmanager-topaz-six.vercel.app/login.html).
+
+<br><br>
+
+##  Tecnologias
 
 - Node.js + Express  
 - PostgreSQL  
-- Docker (para facilitar execução)
+- Docker (para finalidade de portabilidade)
 <br><br>
 
-## ⚙️ Funcionalidades atuais
+##  Funcionalidades atuais
 
-- Cadastro de usuários (planejado, ainda em desenvolvimento)  
+- Cadastro de usuários, com bcrypt para criptografar a senha no banco de dados
+- Login utilizando JWT 
 - Criação de tarefas vinculadas ao usuário  
 - Listagem de tarefas, com filtro por status  
-- Atualização do status de uma tarefa pelo título  
-- Remoção de tarefas pelo título ou remoção de todas as tarefas que atendam um status
+- Atualização do status da tarefa
+- Remoção de tarefas
 <br><br>
 
-## 🚀 Como usar
+##  Como usar
 
+No postman, os testes foram utilizados no body, usando tipo raw e json.
 1. Clone o repositório:
 
 ```git clone https://github.com/leongabess/TaskManager.git```
 
     
-2. Entre na pasta e rode o docker:
+2. Dentro da pasta, no terminal, utilize o docker compose:
 
 ```
 cd TaskManager
@@ -51,22 +54,41 @@ docker compose up
 ```http://localhost:5000/api/tasks```
 
 4. Exemplos de uso via HTTP:
+- Registro de usuários:
+```POST http://localhost:5000/auth/register```
+Utilizar {"user": exemplo,
+"password": "exemplo"}
 
+- Login
+```POST http://localhost:5000/auth/login```
+Também utilizar {"user": "exemplo",
+"password": "exemplo"}
+
+Para chamadas relacionadas a manipulação das tarefas, primeiro deve usar o token gerado na parte de "bearer token".
+
+- Adicionar tarefas:
+```POST http://localhost:5000/api/tasks```
+Utilizar {"title": "titulo da tarefa",
+"description": "descrição da tarefa",
+"status": "status da tarefa"}
 - Listar todas as tarefas:
 
 ```GET http://localhost:5000/api/tasks```
 
 - Listar tarefas por status:
 
-```GET http://localhost:5000/api/tasks?status=done```
+```GET http://localhost:5000/api/tasks?status={exemploDeStatus}```
+
+- Atualização de status das tarefas:
+``` PATCH http://localhost:5000/api/tasks/{idDaTarefaAqui}
+{"status": "exemploDeStatus"}
+```
+- Remoção de tarefas:
+``` DELETE http://localhost:5000/api/tasks/{idDaTarefaAqui}```
 
 <br><br>
-## 👣 Próximos passos
 
-- Desenvolvimento do front-end para interação do usuário
-
-- Tela inicial com descrição e instruções
-
-- Páginas para criação, atualização e remoção de tarefas via interface gráfica
-
-- Sistema de autenticação e gerenciamento de usuários
+##  Planos futuros
+-  Sistema de compartilhamento de grupo de tarefas entre usuários
+- Melhora no frontend
+- Adaptar para mobile
