@@ -34,7 +34,29 @@ A API, backend e banco de dados (no momento) estão hospedados no [render](https
 - Remoção de tarefas
 <br><br>
 
-##  Como usar
+## Capturas de tela do funcionamento
+
+<h3>Login</h3>
+
+![login](https://github.com/user-attachments/assets/a06a8441-3127-4841-a6bd-f3f58a4a85b0)
+
+<h3>Criação de tarefas</h3>
+
+![tarefasregistradas](https://github.com/user-attachments/assets/d2edcbce-2cc4-409b-a79c-5ebbe2190986)
+
+<h3>Atualizar status</h3>
+
+![atualização](https://github.com/user-attachments/assets/138719e9-4c94-42a7-9f07-bfbe76ba3e65)
+
+<h3>Exclusão</h3>
+
+![exclusao](https://github.com/user-attachments/assets/79b33153-57e5-4502-b5c0-479f2fd67e60)
+
+
+
+
+
+##  Como executar localmente
 
 No postman, os testes foram utilizados no body, usando tipo raw e json.
 1. Clone o repositório:
@@ -54,20 +76,25 @@ docker compose up
 ```http://localhost:5000/api/tasks```
 
 4. Exemplos de uso via HTTP:
+
 - Registro de usuários:
 ```POST http://localhost:5000/auth/register```
+
 Utilizar {"user": exemplo,
 "password": "exemplo"}
 
 - Login
 ```POST http://localhost:5000/auth/login```
+
 Também utilizar {"user": "exemplo",
 "password": "exemplo"}
 
 Para chamadas relacionadas a manipulação das tarefas, primeiro deve usar o token gerado na parte de "bearer token".
 
 - Adicionar tarefas:
+
 ```POST http://localhost:5000/api/tasks```
+
 Utilizar {"title": "titulo da tarefa",
 "description": "descrição da tarefa",
 "status": "status da tarefa"}
@@ -80,9 +107,11 @@ Utilizar {"title": "titulo da tarefa",
 ```GET http://localhost:5000/api/tasks?status={exemploDeStatus}```
 
 - Atualização de status das tarefas:
+  
 ``` PATCH http://localhost:5000/api/tasks/{idDaTarefaAqui}
 {"status": "exemploDeStatus"}
 ```
+
 - Remoção de tarefas:
 ``` DELETE http://localhost:5000/api/tasks/{idDaTarefaAqui}```
 
