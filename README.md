@@ -8,7 +8,7 @@ Gerenciador de tarefas com foco em permitir que usuários criem, visualizem, atu
 
 TaskerManager foi baseado no meu projeto [TaskManagerCLI](https://github.com/leongabess/TaskManagerCLI), um desafio do roadmap.sh. 
 
-O projeto em CLI fazia coisas básicas como obter e salvar as tarefas em um .JSON, porém resolvi aplicar o conceito do CRUD (que passou por várias alterações) em uma aplicação backend, utilizando o Express e PostgreSQL (para substituir o .JSON)
+O projeto em CLI fazia coisas básicas como obter e salvar as tarefas em um .JSON, porém resolvi aplicar o conceito do CRUD (que passou por várias alterações) em uma aplicação backend, utilizando o Express e PostgreSQL (para substituir o .JSON). O frontend foi feito com CSS simples junto do JavaScript para a lógica.
 
 
 Os testes e chamadas à API foram realizados pelo postman.
