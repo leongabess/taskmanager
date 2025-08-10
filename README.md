@@ -1,4 +1,4 @@
-##  TaskerManager
+##  TaskManager
 
 Gerenciador de tarefas com foco em permitir que usuários criem, visualizem, atualizem e removam tarefas associadas a seus perfis. Suporta filtragem por status e operações via API.
 
